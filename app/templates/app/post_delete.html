@@ -1,0 +1,23 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Delete Post{% endblock title %}
+
+{% block main-content %}
+
+  <div class="container my-5" style="padding-top: 40px;">
+    <div class="row">
+      <div class="col-md-12">
+       <center>
+          <h1>Delete</h1>
+          <form action="" method="post">
+            {% csrf_token %}
+            <p>Are you sure you want to delete this post?</p>
+            <button class="btn btn-danger ml-2" type="submit">Confirm Delete</button>
+          </form>
+       </center>
+      </div>
+    </div>
+  </div>
+
+{% endblock main-content %}

@@ -1,0 +1,45 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}Bike_Post{% endblock title %}
+
+{% block main-content %}
+
+<div class="container my-5" style="padding-top: 40px;">
+
+  <div class="row">
+    <div class="col-md-10 mx-auto">
+      <div class="card shadow p-5">
+        <div class="card-header text-black">
+          <h2>Post a bike</h2>
+        </div>
+        <div class="card-body">
+
+          <form action="" method="POST" enctype="multipart/form-data">
+            {% if messages %}
+            {% for message in messages %}
+            <p {% if message.tags %} class="alert alert-{{message.tags}}
+            mb-5 {% endif %}">{{message}}</p>
+            {% endfor %}
+            {% endif %}
+
+            <div class="form-group">
+              {% csrf_token %}
+              {{ form | crispy }}
+              {% for error in field.errors %}
+              <span style="color:red">{{ error }}</span>
+
+              {% endfor %}
+              <br>
+              <input type="submit" value="Post" class="btn btn-primary">
+              <br>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock main-content %}

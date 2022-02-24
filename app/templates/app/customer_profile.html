@@ -1,0 +1,181 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}profile{% endblock title %}
+
+{% block main-content %}
+
+<div class="container my-5">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card flex-row  mt-5">
+        <div class="card-body row px-2 align-items-center">
+          <div class="col-md-3">
+            {% if customer.profile_image %}
+            <img src="{{ customer.profile_image.url }}" width="100%" height="200px" alt="No images">
+            {% else %}
+            <img src="{% static 'app/images/banner1/images.png' %}" alt="" width="100%" height="200px">
+            {% endif %}
+          </div>
+          <div class="col-md-5">
+            <h4 class="card-title">
+              <div class="me-1">
+                <h1 class="me-2"><b>{{customer.first_name|capfirst}}</b> <span><b>{{customer.last_name|capfirst}}</b></span></h1>
+              </div>
+              
+            </h4>
+            <!-- <p class="card-text">
+            <h3 class="text-muted">{{startup.title}}</h3>
+            </p> -->
+          </div>
+
+          {% if customer.user.pk == request.user.pk %}
+          <div class="col-md-2 text-center">
+            <div class="flex-row">
+              <a href="" class="btn btn-lg"
+                style="background-color: #6D0A15; color: white;">Edit Profile</a>
+            </div>
+          </div>
+          {% elif request.user.is_authenticated %}
+          <div class="col-md-2 text-center">
+            <div class="flex-row">
+              <a href="" class="btn btn-lg" style="background-color: #6D0A15; color: white;">Message</a>
+            </div>
+          </div>
+          {% else %}
+          <div class="col-md-4 text-center">
+            <div class="flex-row">
+              <a href="{% url 'login' %}" class="btn btn-lg" style="background-color: #6D0A15; color: white;">Login or
+                signup</a>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+
+
+      </div>
+
+    </div>
+  </div>
+</div>
+<br>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <center><a href="{% url 'bikepost' %}" role="button" class="btn btn-primary">Post Bikes</a></center>
+    </div>
+    <div class="col-md-4">
+      <center><a href="{% url 'bikes' %}" role="button" class="btn btn-primary">Rent Bikes</a></center>
+    </div>
+  </div>
+</div>
+
+<br><br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          General Information
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> username:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b>{{request.user.username}}</b></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> :</b></p>
+            </div>
+            <div class="col-6">
+              <p><b>{{customer.}}</b></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> :</b></p>
+            </div>
+            <div class="col-6">
+              <p><b>{{customer.}}</b></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> :</b></p>
+            </div>
+            <div class="col-6">
+              <p><b>{{customer.}}</b></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> :</b></p>
+            </div>
+            <div class="col-6">
+              <p><b>{{customer.}}</b></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% if customer.user.pk == request.user.pk %}
+  <div class="container my-4" style="padding-top: 80px;">
+    <center><h3>Total Posted Bikes</h3></center>
+    <br><hr>
+    <div class="row">
+      {% for bike in post %}
+      <div class="col-md-3">
+        <div class=" card h-100">
+          <img src="{{ bike.bike_images.url }}" class="card-img-top" alt="No images">
+          <div class="card-body">
+            <h5 class="card-title">{{bike.bike_name}}</h5>
+            <p><b>{{bike.rent_price}} per hour</b></p>
+            <p class="card-text">Milage Covered:{{bike.milage_covered}} | Milage Per Liter:{{bike.milagePerliter}}
+            </p>
+            <a href="{% url 'post_edit' bike.id %}" class="btn btn-primary">Edit</a>  <a href="{% url 'bike-detail' bike.id %}" style="color: white;" class="btn btn-info">Details</a> <a href="{% url 'post_delete' bike.id %}" class="btn btn-danger">Delete</a>
+          </div>
+        </div>
+
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% elif request.user.is_authenticated %}
+  <div class="container my-4" style="padding-top: 80px;">
+    <center><h3>Total available bikes</h3></center>
+    <div class="row">
+      {% for bike in post %}
+      {% if bike.is_available %}
+      <div class="col-md-3">
+        <div class=" card" style="width: 18rem;">
+          <img src="{{ bike.bike_images.url }}" class="card-img-top" alt="No images">
+          <div class="card-body">
+            <h5 class="card-title">{{bike.bike_name}}</h5>
+            <p><b>{{bike.rent_price}} per hour</b></p>
+            <p class="card-text">Milage Covered:{{bike.milage_covered}} | Milage Per Liter:{{bike.milagePerliter}}
+            </p>
+            <a href="#" class="btn btn-primary">Book Now</a> 
+          </div>
+        </div>
+  
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+
+
+
+
+{% endblock main-content %}

@@ -1,0 +1,77 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Details{% endblock title %}
+
+{% block main-content %}
+
+<div class="container" style="padding-top: 80px;">
+  <div class="row">
+    <div class="col-md-5">
+      <img src="{{ object.bike_images.url }}" alt="" style="width: 100%; height: 50vh;">
+    </div>
+    <div class="col-md-7">
+      <h2>{{object.bike_name}}</h2>
+      <h5>Rent price: {{object.rent_price}} per hour</h5>
+
+      <h5>Drop-Off-Location: {{object.drop_off_location}}</h5>
+      <br>
+      <a href="" role="button" class="btn btn-primary">Book Now</a>
+      <br>
+    </div>
+  </div>
+</div>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-10">
+      <div class="card">
+        <div class="card-header" style="background-color: #6D0A15; color: white;">
+          <b>Bike Informations</b>
+        </div>
+        <div class="card-body">
+          <div class="row " >
+            <div class="col-md-6 text-muted">
+              <p><b> Milage Covered:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b>{{object.milage_covered}}</b></p>
+            </div>
+          </div>
+          <div class="row " >
+            <div class="col-md-6 text-muted">
+              <p><b> Milage Per Hour:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b>{{object.milagePerliter}}</b></p>
+            </div>
+          </div>
+          <div class="row " >
+            <div class="col-md-6 text-muted">
+              <p><b> Bike Condition:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b>{{object.bike_condition}}</b></p>
+            </div>
+          </div>
+          <div class="row " >
+            <div class="col-md-6 text-muted">
+              <p><b> Description:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b>{{object.bike_description}}</b></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock main-content %}
+
+<center>
+  <h5>Specification</h5>
+</center>
+<br>

@@ -41,11 +41,12 @@
                 <a class="nav-link active" aria-current="page" style="color: #6D0A15;" href="/">Home</a>
               </li>
               <li class="nav-item mx-2">
-                <a href="" class="nav-link" style="color: #6D0A15;">Bikes</a>
+                <a href="{% url 'bikes' %}" class="nav-link" style="color: #6D0A15;">Bikes</a>
               </li>
               <li class="nav-item mx-2">
                 <a href="" class="nav-link" style="color: #6D0A15;">Contact</a>
               </li>
+              
             </ul>
             <form class="d-flex input-group w-auto" method="POST" action="">
               {% csrf_token %}
@@ -55,32 +56,36 @@
                   style="color: white;"></i></button>
             </form>
             <div>
+              
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-               
+              {% if request.user.is_authenticated %}
                 <li class="nav-item dropdown mx-2">
                   <a class="nav-link dropdown-toggle" style="color: #6D0A15" href="#" id="profileDropdown" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
-                    Profile
+                    {{request.user.username|capfirst}}
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="profileDropdown">
-                    <li><a class="dropdown-item" href=""> Profile</a></li>
-                    <li><a class="dropdown-item" href="">Update Profile</a></li>
-                    <li><a class="dropdown-item" href="">Change Password</a></li>
+                    <li><a class="dropdown-item" href="{% url 'profile' user.id %}"> Profile</a></li>
+                    <li><a class="dropdown-item" href="{% url 'profileform' user.id %}">Update Profile</a></li>
+                    <li><a class="dropdown-item" href="{% url 'passwordchange' %}">Change Password</a></li>
   
                   </ul>
                 </li>
                 <li class="nav-item mx-2">
-                  <a href="" class="nav-link" style="color: #6D0A15">Logout</a>
+                  <a href="{% url 'logout' %}" class="nav-link" style="color: #6D0A15">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item mx-2">
+                  <a href="{% url 'login' %}" class="nav-link" style="color: #6D0A15">Login</a>
                 </li>
                 
+                
                 <li class="nav-item mx-2">
-                  <a href="" class="nav-link" style="color: #6D0A15">Registration</a>
+                  <a href="{% url 'registration' %}" class="nav-link" style="color: #6D0A15;">Registration</a>
                 </li>
-                <li class="nav-item mx-2">
-                  <a href="" class="nav-link" style="color: #6D0A15;">Login</a>
-                </li>
-               
+              {% endif %}
               </ul>
+              
             </div>
           </div>
         </div>
@@ -90,8 +95,8 @@
 
  {% block slider %}
  {% endblock slider %}
-  {% block content %}
-  {% endblock content %}
+  {% block main-content %}
+  {% endblock main-content %}
 
 <br><br>
   <div class="container-fluid">

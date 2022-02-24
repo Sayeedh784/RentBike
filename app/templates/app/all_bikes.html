@@ -1,0 +1,39 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Bikes for Rent{% endblock title %}
+
+{% block main-content %}
+
+
+
+<a href="" style="text-decoration: none; color: black;">
+  <div class="container my-4" style="padding-top: 80px;">
+    <div class="row">
+      
+      {% for bike in bikes %}
+      {% if bike.is_available %}
+      <div class="col-md-3">
+        <div class=" card h-100">
+          <img src="{{ bike.bike_images.url }}" class="card-img-top" style="width: 100%; height: 30vh;" alt="No images">
+          <div class="card-body">
+            <h5 class="card-title">{{bike.bike_name}}</h5>
+            <p><b>{{bike.rent_price}} per hour</b></p>
+            <p class="card-text">Milage Covered:{{bike.milage_covered}} | Milage/Liter:{{bike.milagePerliter}}
+            </p>
+            <br>
+            <a href="{% url 'bike-detail' bike.pk %}" class="btn btn-primary">Book Now</a>
+          </div>
+        </div>
+  
+      </div>
+      {% endif %}
+      {% endfor %}
+      
+    </div>
+  </div>
+</a>
+
+
+
+{% endblock main-content %}
