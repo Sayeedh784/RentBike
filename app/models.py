@@ -1,4 +1,5 @@
 
+from statistics import mode
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
@@ -33,6 +34,7 @@ CONDITION=(
 
 class Bikepost(models.Model):
   post_user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,blank=True,null=True)
+  bike_id = models.AutoField
   bike_images = models.ImageField(upload_to='images',blank=True,null=True)
   bike_name = models.CharField(max_length=50,blank=True,null=True)
   rent_price = models.CharField(max_length=20,blank=True,null=True)
@@ -48,11 +50,14 @@ class Bikepost(models.Model):
 
 class Rentbike(models.Model):
   rent_user= models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True)
+  post_user = models.ForeignKey(Bikepost,on_delete=models.CASCADE,null=True,blank=True)
   pick_up_location = models.CharField(max_length=100,blank=True,null=True)  
   drop_off_location = models.CharField(max_length=100,blank=True,null=True)
   pick_up_date = models.DateField()  
   drop_off_date = models.DateField()
   pick_up_time=models.TimeField() 
+  request_status = models.CharField(max_length=30,default="Pending")
+  
 
   def __str__(self):
     return str(self.id)

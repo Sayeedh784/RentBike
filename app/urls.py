@@ -9,15 +9,19 @@ from django.contrib.auth import views as auth_views
 urlpatterns=[
   path('',views.home,name="home"),
   path('profileform/<str:pk>/',views.userprofileform,name="profileform"),
+#   path('update/<int:pk>/',views.CustomerUpdateView.as_view(),name="update"),
   path('customer-profile/<str:pk>/',views.customer_profile,name="customer-profile"),
   path('profile/<str:pk>/',views.profile,name="profile"),
-  
+  path('rentform/<str:pk>/',views.rent_bike_form,name="rentform"),
+  path('bikes/',views.all_bikes,name="bikes"),
   path('bikepost/',views.BikePostCreateView.as_view(),name='bikepost'),
+  path('rent-details/',views.rent_details,name="rent-details"),
+  path('cancel/<int:rent_user>/',views.cancelRequest,name="cancel"),
   path('bike-detail/<int:pk>/',BikeDetailView.as_view(), name='bike-detail'),
   path('post/<int:pk>/edit/',PostUpdateView.as_view(), name='post_edit'),
   
   path('post/<int:pk>/delete/',PostDeleteView.as_view(), name='post_delete'),
-  path('bikes/',views.all_bikes,name="bikes"),
+  
 #   path('bike-list/',views.BikeListView.as_view(),name="bike-list"),
 
   path('registration/',views.CustomerRegistration.as_view(),name="registration"),

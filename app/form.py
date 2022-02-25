@@ -49,7 +49,8 @@ class BikePostForm(forms.ModelForm):
 class RentBikeForm(forms.ModelForm):
   class Meta:
     model = Rentbike
-    fields = ['pick_up_location','drop_off_location','pick_up_date','drop_off_date','pick_up_time']
+    exclude= ('rent_user','post_user','request_status',)
+    # fields = ['pick_up_location','drop_off_location','pick_up_date','drop_off_date','pick_up_time']
 
 class MyPasswordChangeForm(PasswordChangeForm):
   old_password = forms.CharField(label=_("Old Password"),

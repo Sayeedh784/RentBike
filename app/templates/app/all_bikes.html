@@ -13,7 +13,8 @@
       
       {% for bike in bikes %}
       {% if bike.is_available %}
-      <div class="col-md-3">
+     
+      <div class="col-md-3 my-3">
         <div class=" card h-100">
           <img src="{{ bike.bike_images.url }}" class="card-img-top" style="width: 100%; height: 30vh;" alt="No images">
           <div class="card-body">
@@ -22,11 +23,16 @@
             <p class="card-text">Milage Covered:{{bike.milage_covered}} | Milage/Liter:{{bike.milagePerliter}}
             </p>
             <br>
-            <a href="{% url 'bike-detail' bike.pk %}" class="btn btn-primary">Book Now</a>
+            {% if bike.post_user.pk == request.user.pk %}
+            <a href="{% url 'bike-detail' bike.id %}" class="btn btn-primary">Own bike</a>
+            {% else %}
+            <a href="{% url 'bike-detail' bike.pk %}" class="btn btn-primary">Show Details</a>
+            {% endif %}
           </div>
         </div>
   
       </div>
+     
       {% endif %}
       {% endfor %}
       

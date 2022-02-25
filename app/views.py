@@ -64,6 +64,17 @@ def userprofileform(request,pk):
   context = {'form':form}
   return render(request, 'app/user_profile.html',context)
 
+# class CustomerUpdateView(LoginRequiredMixin,UpdateView):
+#   model = Customer
+#   fields = ('first_name','last_name','profile_image','email','mobile','nid','photo_of_NID','driving_licence','Photo_of_licence','location')
+#   template_name = 'app/user_profile.html'
+#   login_url = 'login'
+
+#   def dispatch(self,request,*args,**kwargs):
+#     obj= self.get_object()
+#     if obj.user != self.request.user:
+#       raise PermissionDenied
+#     return super().dispatch(request,*args,**kwargs)
 
 def profile(request,pk):
   customer = Customer.objects.get(user_id = request.user.id)
@@ -91,11 +102,10 @@ def customer_profile(request,pk):
 
 def all_bikes(request):
   bikes = Bikepost.objects.all()
-  return render(request, 'app/all_bikes.html',{'bikes':bikes})
-# class BikeListView(LoginRequiredMixin,ListView):
-#   model = Bikepost
-#   template_name = 'app/all_bikes.html'
-#   login_url = 'login'
+  customer = Customer.objects.all()
+  rent_bike = Rentbike.objects.all()
+  return render(request, 'app/all_bikes.html',{'bikes':bikes,'customer':customer,'rent_bike':rent_bike})
+
 class BikePostCreateView(LoginRequiredMixin,CreateView):
   model = Bikepost
   template_name = 'app/bikepost.html'
@@ -113,7 +123,7 @@ class BikeDetailView(LoginRequiredMixin,DetailView):
 
 class PostUpdateView(LoginRequiredMixin,UpdateView):
   model = Bikepost
-  fields = ('bike_images','bike_name','rent_price','bike_description','drop_off_location')
+  fields = ('bike_images','bike_name','rent_price','bike_description','drop_off_location','is_available')
   template_name = 'app/post_edit.html'
   login_url = 'login'
 
@@ -135,3 +145,34 @@ class PostDeleteView(LoginRequiredMixin,DeleteView):
     if obj.post_user != self.request.user:
       raise PermissionDenied
     return super().dispatch(request,*args,**kwargs)
+
+
+def rent_bike_form(request,pk):
+  if request.method == 'POST':
+    # obj= get_object_or_404(Rentbike,rent_user=request.user)
+    form = RentBikeForm(request.POST)
+    if form.is_valid():
+      instance=form.instance.post_user = Bikepost.objects.get(pk=pk)
+      instance.is_available = False
+      instance = form.save(commit=False)
+      instance.rent_user = request.user
+      instance.save()
+      messages.success(request, 'Congratulations You request sent succesfully!!!')
+      
+  else:
+    form = RentBikeForm()
+  context = {'form':form, }
+  return render(request,'app/rent_form.html',context)
+
+
+
+def rent_details(request):
+  rent_request= Rentbike.objects.all()
+  customer = Customer.objects.all()
+  return render(request, 'app/request.html',{'rent_request':rent_request,'customer':customer})
+
+def cancelRequest(request,rent_user):
+  # bike = Rentbike.objects.get(rent_user=rent_user)
+  bike = get_object_or_404(Rentbike, rent_user=rent_user)
+  bike.delete()
+  return render(request, 'app/request.html', {'bike': bike} )

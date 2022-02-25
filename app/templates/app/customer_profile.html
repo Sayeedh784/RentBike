@@ -17,23 +17,32 @@
             <img src="{% static 'app/images/banner1/images.png' %}" alt="" width="100%" height="200px">
             {% endif %}
           </div>
-          <div class="col-md-5">
+          <div class="col-md-3">
             <h4 class="card-title">
               <div class="me-1">
                 <h1 class="me-2"><b>{{customer.first_name|capfirst}}</b> <span><b>{{customer.last_name|capfirst}}</b></span></h1>
               </div>
+              <br>
+              {% if customer.user.pk == request.user.pk %}
               
+                <div class="flex-row">
+                  <a href="{% url 'profileform' user.id %}" class="btn btn-sm " style="background-color: #6D0A15; color: white;">Edit Profile</a>
+                </div>
+              
+              {% endif %}
             </h4>
-            <!-- <p class="card-text">
-            <h3 class="text-muted">{{startup.title}}</h3>
-            </p> -->
           </div>
 
           {% if customer.user.pk == request.user.pk %}
+         
           <div class="col-md-2 text-center">
             <div class="flex-row">
-              <a href="" class="btn btn-lg"
-                style="background-color: #6D0A15; color: white;">Edit Profile</a>
+              <a href="{% url 'bikepost' %}" role="button" class="btn btn-lg btn-primary">Post Bikes</a>
+            </div>
+          </div>
+          <div class="col-md-2 text-center">
+            <div class="flex-row">
+              <a href="{% url 'bikes' %}" role="button" class="btn btn-lg btn-primary">Rent Bikes</a>
             </div>
           </div>
           {% elif request.user.is_authenticated %}
@@ -50,6 +59,7 @@
             </div>
           </div>
           {% endif %}
+         
         </div>
 
 
@@ -60,29 +70,19 @@
 </div>
 <br>
 
-<div class="container">
-  <div class="row">
-    <div class="col-md-4">
-      <center><a href="{% url 'bikepost' %}" role="button" class="btn btn-primary">Post Bikes</a></center>
-    </div>
-    <div class="col-md-4">
-      <center><a href="{% url 'bikes' %}" role="button" class="btn btn-primary">Rent Bikes</a></center>
-    </div>
-  </div>
-</div>
 
 <br><br>
 <div class="container">
   <div class="row">
     <div class="col-md-8">
       <div class="card">
-        <div class="card-header">
+        <div class="card-header" style="background-color: #6D0A15; color: white;">
           General Information
         </div>
         <div class="card-body">
           <div class="row">
             <div class="col-4 text-muted">
-              <p><b> username:</b></p>
+              <p><b><i class="far fa-user-circle"></i> username:</b></p>
             </div>
             <div class="col-6">
               <p><b>{{request.user.username}}</b></p>
@@ -90,34 +90,26 @@
           </div>
           <div class="row">
             <div class="col-4 text-muted">
-              <p><b> :</b></p>
+              <p><b><i class="fal fa-mobile "></i> Mobile no:</b></p>
             </div>
             <div class="col-6">
-              <p><b>{{customer.}}</b></p>
+              <p><b>{{customer.mobile}}</b></p>
             </div>
           </div>
           <div class="row">
             <div class="col-4 text-muted">
-              <p><b> :</b></p>
+              <p><b><i class="far fa-envelope"></i> Email:</b></p>
             </div>
             <div class="col-6">
-              <p><b>{{customer.}}</b></p>
+              <p><b>{{customer.email}}</b></p>
             </div>
           </div>
           <div class="row">
             <div class="col-4 text-muted">
-              <p><b> :</b></p>
+              <p><b><i class="fas fa-map-marked-alt"></i> Location:</b></p>
             </div>
             <div class="col-6">
-              <p><b>{{customer.}}</b></p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-4 text-muted">
-              <p><b> :</b></p>
-            </div>
-            <div class="col-6">
-              <p><b>{{customer.}}</b></p>
+              <p><b>{{customer.location}}</b></p>
             </div>
           </div>
         </div>

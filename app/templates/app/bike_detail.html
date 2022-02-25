@@ -12,11 +12,16 @@
     </div>
     <div class="col-md-7">
       <h2>{{object.bike_name}}</h2>
-      <h5>Rent price: {{object.rent_price}} per hour</h5>
+      <h5>Rent price: {{object.rent_price}} Tk. per hour</h5>
 
       <h5>Drop-Off-Location: {{object.drop_off_location}}</h5>
       <br>
-      <a href="" role="button" class="btn btn-primary">Book Now</a>
+      
+      {% if object.post_user.pk == request.user.pk %}
+      <a href=""></a>
+      {% else %}
+      <a href="{% url 'rentform' object.id %}" role="button" class="btn btn-primary">Book Now</a>
+      {% endif %}
       <br>
     </div>
   </div>
@@ -27,7 +32,7 @@
     <div class="col-md-10">
       <div class="card">
         <div class="card-header" style="background-color: #6D0A15; color: white;">
-          <b>Bike Informations</b>
+          <b>Bike Specification</b>
         </div>
         <div class="card-body">
           <div class="row " >
