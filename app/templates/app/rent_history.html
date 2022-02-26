@@ -1,12 +1,15 @@
 {% extends 'app/base.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
-{% block title %}Rent Request{% endblock title %}
+{% block title %}Rent History{% endblock title %}
 
 {% block main-content %}
 
+
 <div class="container my-5" style="padding-top: 80px;">
-  <center><h2>Rent Request</h2></center>
+  <center>
+    <h2>Rent History</h2>
+  </center>
   <br><br>
   <div class="row">
     <div class="col-md-12 table-responsive">
@@ -14,8 +17,8 @@
         <thead>
           <tr>
             <th scope="col">Serial no</th>
-            <th scope="col">Renter name</th>
-            <th scope="col">Renter Email</th>
+            <th scope="col">bike owner name</th>
+            <th scope="col">Bike owner Email</th>
             <th scope="col">Bike name</th>
             <th scope="col">Pick Up Date</th>
             <th scope="col">Drop-off-Date</th>
@@ -23,41 +26,43 @@
             <th scope="col">Drop-Off-Location</th>
             <th scope="col">Pick Up Time</th>
             <th scope="col">Request Status</th>
-            
+
           </tr>
         </thead>
-        {% for rent in rent_request %}
-        
-        {% if rent.post_user.post_user.pk == request.user.pk %}
+        {% for rent in rent_history %}
+        {% if rent.rent_user.pk == request.user.pk %}
         <tbody>
           <tr>
             <th scope="row">{{forloop.counter}}</th>
-            <td>{{rent.rent_user.username}}</td>
-            <td>{{rent.rent_user.email}}</td>
+            <td>{{rent.post_user.post_user.username}}</td>
+            <td>{{rent.post_user.post_user.email}}</td>
             <td>{{rent.post_user.bike_name}}</td>
             <td>{{rent.pick_up_date}}</td>
             <td>{{rent.drop_off_date}}</td>
             <td>{{rent.pick_up_location}}</td>
             <td>{{rent.drop_off_location}}</td>
             <td>{{rent.pick_up_time}}</td>
-            {% if rent.request_status == "Pending" %}
-            <td><span><a href="{% url 'accept' rent.rent_user.id %}" class="btn btn-sm btn-success">Accept</a></span> <span><a href="{% url 'decline' rent.rent_user.id %}" role="button" class="btn btn-sm btn-danger">Decline</a></span> </td>
+            {% if rent.request_status == "pending" %}
+            <td style="color: red;">{{rent.request_status}} <span><a href="{% url 'cancel' rent.rent_user.id %}" role="button" class="btn btn-sm btn-danger">Cancel</a></span></td>
             {% elif rent.request_status == "Decline" %}
             <td style="color: red;">{{rent.request_status}} </td>
             {% elif rent.request_status == "Accepted" %}
             <td style="color: green;">{{rent.request_status}} </td>
             {% endif %}
             
+
           </tr>
-          
-          
+
+
         </tbody>
-       {% endif %}
+        {% endif %}
         {% endfor %}
       </table>
     </div>
   </div>
 </div>
+
+
 
 
 {% endblock main-content %}

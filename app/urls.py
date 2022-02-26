@@ -14,12 +14,16 @@ urlpatterns=[
   path('profile/<str:pk>/',views.profile,name="profile"),
   path('rentform/<str:pk>/',views.rent_bike_form,name="rentform"),
   path('bikes/',views.all_bikes,name="bikes"),
-  path('bikepost/',views.BikePostCreateView.as_view(),name='bikepost'),
+
   path('rent-details/',views.rent_details,name="rent-details"),
+  path('rent-history/',views.rent_history,name="rent-history"),
   path('cancel/<int:rent_user>/',views.cancelRequest,name="cancel"),
+  path('decline/<int:rent_user>/',views.decline,name="decline"),
+  path('accept/<int:rent_user>/',views.accept,name="accept"),
+  
+  path('bikepost/',views.BikePostCreateView.as_view(),name='bikepost'),
   path('bike-detail/<int:pk>/',BikeDetailView.as_view(), name='bike-detail'),
   path('post/<int:pk>/edit/',PostUpdateView.as_view(), name='post_edit'),
-  
   path('post/<int:pk>/delete/',PostDeleteView.as_view(), name='post_delete'),
   
 #   path('bike-list/',views.BikeListView.as_view(),name="bike-list"),

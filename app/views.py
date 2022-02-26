@@ -168,11 +168,26 @@ def rent_bike_form(request,pk):
 
 def rent_details(request):
   rent_request= Rentbike.objects.all()
-  customer = Customer.objects.all()
-  return render(request, 'app/request.html',{'rent_request':rent_request,'customer':customer})
+  return render(request, 'app/request.html',{'rent_request':rent_request,})
+
+def rent_history(request):
+  rent_history= Rentbike.objects.all()
+  return render(request, 'app/rent_history.html',{'rent_history':rent_history,})
 
 def cancelRequest(request,rent_user):
   # bike = Rentbike.objects.get(rent_user=rent_user)
   bike = get_object_or_404(Rentbike, rent_user=rent_user)
   bike.delete()
-  return render(request, 'app/request.html', {'bike': bike} )
+  return render(request, 'app/rent_history.html', {'bike': bike} )
+
+def decline(request,rent_user):
+  bike = get_object_or_404(Rentbike, rent_user=rent_user)
+  bike.request_status = "Decline"
+  bike.save()
+  return render(request, 'app/request.html',{'bike':bike})
+
+def accept(request,rent_user):
+  bike = get_object_or_404(Rentbike, rent_user=rent_user)
+  bike.request_status = "Accepted"
+  bike.save()
+  return render(request, 'app/request.html',{'bike':bike})
