@@ -121,7 +121,7 @@
 
 {% if customer.user.pk == request.user.pk %}
   <div class="container my-4" style="padding-top: 80px;">
-    <center><h3>Total Posted Bikes</h3></center>
+    <center><h3>Total Posted Bikes ({{posts}})</h3></center>
     <br><hr>
     <div class="row">
       {% for bike in post %}

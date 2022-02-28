@@ -9,6 +9,8 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views import View
 from .form import *
+from .filters import *
+from django.core.paginator import Paginator
 from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.views.generic import ListView,DeleteView
@@ -18,6 +20,15 @@ from django.views.generic.edit import UpdateView,DeleteView,CreateView
 # Create your views here.
 def home(request):
   return render(request,'app/home.html')
+
+def search_list(request):
+  if request.method == 'POST':
+    q = request.POST['q']
+    bikes = Bikepost.objects.filter(bike_name__icontains=q)
+    
+    
+  context = { 'q': q, 'bikes':bikes}
+  return render(request,'app/search_list.html',context)
 
 
 def login_request(request):
@@ -49,6 +60,7 @@ class CustomerRegistration(View):
     if form.is_valid():
       messages.success(request,"Congratulations!!! Registered successfully")
       form.save()
+      return redirect('login')
     return render(request, 'app/customerregistration.html',{'form':form})
 
 def userprofileform(request,pk):
@@ -79,11 +91,11 @@ def userprofileform(request,pk):
 def profile(request,pk):
   customer = Customer.objects.get(user_id = request.user.id)
   post = Bikepost.objects.filter(post_user_id = request.user.id)
-  return render(request, 'app/customer_profile.html',{'customer':customer,'post':post})
+  posts=post.count()
+  return render(request, 'app/customer_profile.html',{'customer':customer,'post':post,'posts':posts})
 
 def customer_profile(request,pk):
   customer = Customer.objects.get(pk=pk)
-  
   return render(request, 'app/customer_profile.html', {'customer':customer,})
 
 # def bikepost(request):
@@ -102,9 +114,17 @@ def customer_profile(request,pk):
 
 def all_bikes(request):
   bikes = Bikepost.objects.all()
+  myfilter = BikepostFilter(request.GET,queryset=bikes)
+  bikes = myfilter.qs
+  all_bike=bikes.count()
   customer = Customer.objects.all()
+  all_cus=customer.count()
+  page = Paginator(bikes, per_page=4)
+  page_list = request.GET.get('page')
+  page = page.get_page(page_list)
   rent_bike = Rentbike.objects.all()
-  return render(request, 'app/all_bikes.html',{'bikes':bikes,'customer':customer,'rent_bike':rent_bike})
+  
+  return render(request, 'app/all_bikes.html',{'bikes':bikes,'page':page,'myfilter': myfilter,'all_bike':all_bike,'all_cus':all_cus,'customer':customer,'rent_bike':rent_bike})
 
 class BikePostCreateView(LoginRequiredMixin,CreateView):
   model = Bikepost
@@ -157,7 +177,7 @@ def rent_bike_form(request,pk):
       instance = form.save(commit=False)
       instance.rent_user = request.user
       instance.save()
-      messages.success(request, 'Congratulations You request sent succesfully!!!')
+      messages.success(request, 'Congratulations, Your request sent succesfully!!!')
       
   else:
     form = RentBikeForm()
@@ -174,20 +194,24 @@ def rent_history(request):
   rent_history= Rentbike.objects.all()
   return render(request, 'app/rent_history.html',{'rent_history':rent_history,})
 
-def cancelRequest(request,rent_user):
-  # bike = Rentbike.objects.get(rent_user=rent_user)
-  bike = get_object_or_404(Rentbike, rent_user=rent_user)
-  bike.delete()
-  return render(request, 'app/rent_history.html', {'bike': bike} )
 
-def decline(request,rent_user):
-  bike = get_object_or_404(Rentbike, rent_user=rent_user)
+def cancelRequest(request,pk):
+  # bike = Rentbike.objects.get(rent_user=rent_user)
+  bike = get_object_or_404(Rentbike, id=pk)
+  bike.delete()
+  return redirect('home')
+  # return render(request, 'app/rent_history.html', {'bike': bike})
+
+def decline(request,pk):
+  bike = get_object_or_404(Rentbike, pk=pk)
   bike.request_status = "Decline"
   bike.save()
-  return render(request, 'app/request.html',{'bike':bike})
+  return redirect('home')
+  # return render(request, 'app/request.html',{'bike':bike})
 
-def accept(request,rent_user):
-  bike = get_object_or_404(Rentbike, rent_user=rent_user)
+def accept(request,pk):
+  bike = get_object_or_404(Rentbike, pk=pk)
   bike.request_status = "Accepted"
   bike.save()
-  return render(request, 'app/request.html',{'bike':bike})
+  return redirect('home')
+  # return render(request, 'app/request.html',{'bike':bike})

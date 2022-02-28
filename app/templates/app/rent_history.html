@@ -14,10 +14,11 @@
   <div class="row">
     <div class="col-md-12 table-responsive">
       <table class="table table-striped">
-        <thead>
+        <!-- <thead style="background-color: #6D0A15; color: white;"> -->
+          <thead>
           <tr>
             <th scope="col">Serial no</th>
-            <th scope="col">bike owner name</th>
+            <th scope="col">Bike owner name</th>
             <th scope="col">Bike owner Email</th>
             <th scope="col">Bike name</th>
             <th scope="col">Pick Up Date</th>
@@ -42,8 +43,8 @@
             <td>{{rent.pick_up_location}}</td>
             <td>{{rent.drop_off_location}}</td>
             <td>{{rent.pick_up_time}}</td>
-            {% if rent.request_status == "pending" %}
-            <td style="color: red;">{{rent.request_status}} <span><a href="{% url 'cancel' rent.rent_user.id %}" role="button" class="btn btn-sm btn-danger">Cancel</a></span></td>
+            {% if rent.request_status == "Pending" %}
+            <td style="color: red;">{{rent.request_status}} <span><a href="{% url 'cancel' rent.pk %}" role="button" class="btn btn-sm btn-danger">Cancel</a></span></td>
             {% elif rent.request_status == "Decline" %}
             <td style="color: red;">{{rent.request_status}} </td>
             {% elif rent.request_status == "Accepted" %}

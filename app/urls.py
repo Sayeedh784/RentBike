@@ -17,9 +17,10 @@ urlpatterns=[
 
   path('rent-details/',views.rent_details,name="rent-details"),
   path('rent-history/',views.rent_history,name="rent-history"),
-  path('cancel/<int:rent_user>/',views.cancelRequest,name="cancel"),
-  path('decline/<int:rent_user>/',views.decline,name="decline"),
-  path('accept/<int:rent_user>/',views.accept,name="accept"),
+  path('cancel/<int:pk>/',views.cancelRequest,name="cancel"),
+  path('decline/<int:pk>/',views.decline,name="decline"),
+  path('accept/<int:pk>/',views.accept,name="accept"),
+  path('search/',views.search_list,name="search"),
   
   path('bikepost/',views.BikePostCreateView.as_view(),name='bikepost'),
   path('bike-detail/<int:pk>/',BikeDetailView.as_view(), name='bike-detail'),
