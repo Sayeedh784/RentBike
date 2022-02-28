@@ -43,10 +43,14 @@
               <li class="nav-item mx-2">
                 <a href="{% url 'bikes' %}" class="nav-link" style="color: #6D0A15;">Bikes</a>
               </li>
-              <li class="nav-item mx-2">
-                <a href="" class="nav-link" style="color: #6D0A15;">Contact</a>
-              </li>
+             
               {% if request.user.is_authenticated %}
+              <li class="nav-item mx-2">
+                <a href="{% url 'bikepost' %}" class="nav-link" style="color: #6D0A15;">Post a Bike</a>
+              </li>
+              <li class="nav-item mx-2">
+                <a href="{% url 'bikes' %}" class="nav-link" style="color: #6D0A15;">Rent a Bike</a>
+              </li>
               <li class="nav-item mx-2">
                 <a href="{% url 'rent-details' %}" class="nav-link" style="color: #6D0A15;">Rent Request</a>
               </li>
@@ -55,9 +59,9 @@
               </li>
               {% endif %}
             </ul>
-            <form class="d-flex input-group w-auto" method="POST" action="">
+            <form class="d-flex input-group w-auto" method="POST" action="{% url 'search' %}">
               {% csrf_token %}
-              <input type="search" class="form-control rounded" name="q" placeholder="Search Here" aria-label="Search"
+              <input type="search" class="form-control rounded" name="q" placeholder="Search by Bike name" aria-label="Search"
                 aria-describedby="search-addon" />
               <button type="submit" class="btn" style="background-color:#6D0A15;"><i class="fas fa-search"
                   style="color: white;"></i></button>
@@ -73,7 +77,7 @@
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="profileDropdown">
                     <li><a class="dropdown-item" href="{% url 'profile' user.id %}"> Profile</a></li>
-                    <li><a class="dropdown-item" href="">Update Profile</a></li>
+                    <li><a class="dropdown-item" href="{% url 'profileform' user.id %}">Update Profile</a></li>
                     <li><a class="dropdown-item" href="{% url 'passwordchange' %}">Change Password</a></li>
   
                   </ul>

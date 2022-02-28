@@ -5,6 +5,7 @@ from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.core.validators import MaxLengthValidator,MinLengthValidator
 # Create your models here.
 
 class User(AbstractUser):
@@ -14,8 +15,8 @@ class Customer(models.Model):
   user=models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True)
   first_name=models.CharField(max_length=30,blank=True,null=True)
   last_name=models.CharField(max_length=30,blank=True,null=True)
-  mobile=models.CharField(max_length=30,blank=True,null=True)
-  email=models.EmailField(max_length=20,blank=True,null=True)
+  mobile=models.CharField(validators=[MinLengthValidator(11), MaxLengthValidator(11)],max_length=11,blank=True,null=True)
+  email=models.CharField(max_length = 50,blank=True,null=True)
   nid=models.IntegerField(blank=True,null=True)
   photo_of_NID=models.ImageField(upload_to='images',null=True,blank=True)
   driving_licence=models.CharField(max_length=100,blank=True,null=True)
@@ -43,7 +44,8 @@ class Bikepost(models.Model):
   bike_condition = models.CharField(max_length=100,choices=CONDITION,blank=True,null=True)
   bike_description = models.TextField(max_length=500,blank=True,null=True)
   drop_off_location = models.CharField(max_length=100,blank=True,null=True) 
-  is_available = models.BooleanField(default=False)
+  is_available = models.BooleanField(default=True)
+  
 
   def get_absolute_url(self):
     return reverse('bike-detail', args=[str(self.id)])

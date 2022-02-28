@@ -5,15 +5,29 @@
 
 {% block main-content %}
 
+<div class="container mt-5" style="padding-top: 50px;">
+  <small style="padding-top: 10px;">
+    <p>Filter by:</p>
+  </small>
+  <div class="row">
+    <div class="col-md-12">
 
+      <form action="" method="get" default="select">
+        {{ myfilter.form }}
+        <button class="btn" style="background-color: #6D0A15; color: white;" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</div>
+<br>
+<div class=" container my-4 text-muted">
+  <p>Showing Total {{all_bike}} Bikes</p>
+</div>
 
-<a href="" style="text-decoration: none; color: black;">
-  <div class="container my-4" style="padding-top: 80px;">
-    <div class="row">
-      
-      
-      {% for bike in bikes %}
-      {% if bike.is_available %}
+  <div class="container" >
+    <div class="row">      
+      {% for bike in page.object_list %}
+      {% if  bike.is_available %}
      
       <div class="col-md-3 my-3">
         <div class=" card h-100">
@@ -25,7 +39,10 @@
             </p>
             <br>
             {% if bike.post_user.pk == request.user.pk %}
-            <a href="{% url 'bike-detail' bike.id %}" class="btn btn-primary">Own bike</a>
+            <!-- <a href="{% url 'bike-detail' bike.id %}" class="btn btn-primary">My bike</a> -->
+            <div class="card-footer" style="background-color: #6D0A15; color: white;">
+              <center><h3>My Bike</h3></center>
+            </div>
             {% else %}
             <a href="{% url 'bike-detail' bike.pk %}" class="btn btn-primary">Show Details</a>
             {% endif %}
@@ -36,10 +53,47 @@
      
       {% endif %}
       {% endfor %}
-      
     </div>
   </div>
-</a>
+  <br>
+  <div class="container">
+    <div class="row my-5">
+  
+      <div class="col-md-4 offset-md-5">
+        <p>page {{page.number}}/{{page.paginator.num_pages}}</p>
+  
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+  
+            <li class="page-item">
+              {% if page.has_previous %}
+              <a class="page-link" href="{% url 'bikes' %}?page={{ page.previous_page_number }}"
+                aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+              {% endif %}
+            </li>
+            {% for num_page in page.paginator.page_range %}
+            {% if page.number == num_page %}
+            <li class="page-item active"><a class="page-link" href="{% url 'bikes' %}?page={{ num_page }}">{{num_page }}</a></li>
+            {% else %}
+            <li class="page-item"><a class="page-link" href="{% url 'bikes' %}?page={{ num_page }}">{{ num_page}}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+            <li class="page-item">
+              {% if page.has_next %}
+              <a class="page-link" href="{% url 'bikes' %}?page={{ page.next_page_number }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+              {% endif %}
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+
 
 
 
