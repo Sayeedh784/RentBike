@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from .models import *
 from django.db import transaction
-from django.forms import fields, widgets
+from django.forms import NumberInput, fields, widgets
 from django.contrib.auth import password_validation
 from django.contrib.auth.forms import PasswordChangeForm, PasswordResetForm, SetPasswordForm, UserCreationForm, AuthenticationForm, UsernameField
 PasswordChangeForm, PasswordResetForm, SetPasswordForm
@@ -47,6 +47,9 @@ class BikePostForm(forms.ModelForm):
     
 
 class RentBikeForm(forms.ModelForm):
+  pick_up_date= forms.DateField(widget=NumberInput(attrs={'type': 'date'}))
+  drop_off_date= forms.DateField(widget=NumberInput(attrs={'type': 'date'}))
+  pick_up_time= forms.TimeField(widget=NumberInput(attrs={'type': 'time'}))
   class Meta:
     model = Rentbike
     exclude= ('rent_user','post_user','request_status',)
