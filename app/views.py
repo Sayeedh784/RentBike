@@ -58,35 +58,35 @@ class CustomerRegistration(View):
   def post(self,request):
     form = CustomerRegistrationFrom(request.POST)
     if form.is_valid():
-      messages.success(request,"Congratulations!!! Registered successfully")
+      messages.success(request,"Congratulations!!! Registered successfully Login Now")
       form.save()
       return redirect('login')
     return render(request, 'app/customerregistration.html',{'form':form})
 
-def userprofileform(request,pk):
-  if request.method == 'POST':
-    obj = get_object_or_404(Customer, user_id=request.user.id)
-    form = CustomerForm(request.POST, request.FILES, instance=obj)
-    if form.is_valid():
-      messages.success(request,'Congratulations profile Updated successfully!!!!')
-      form.save()
+# def userprofileform(request,pk):
+#   if request.method == 'POST':
+#     obj = get_object_or_404(Customer, user_id=request.user.id)
+#     form = CustomerForm(request.POST, request.FILES, instance=obj)
+#     if form.is_valid():
+#       messages.success(request,'Congratulations profile Updated successfully!!!!')
+#       form.save()
       
-  else:
-    form = CustomerForm()
-  context = {'form':form}
-  return render(request, 'app/user_profile.html',context)
+#   else:
+#     form = CustomerForm()
+#   context = {'form':form}
+#   return render(request, 'app/user_profile.html',context)
 
-# class CustomerUpdateView(LoginRequiredMixin,UpdateView):
-#   model = Customer
-#   fields = ('first_name','last_name','profile_image','email','mobile','nid','photo_of_NID','driving_licence','Photo_of_licence','location')
-#   template_name = 'app/user_profile.html'
-#   login_url = 'login'
+class CustomerUpdateView(LoginRequiredMixin,UpdateView):
+  model = Customer
+  fields = ('first_name','last_name','profile_image','email','mobile','nid','photo_of_NID','driving_licence','Photo_of_licence','location')
+  template_name = 'app/user_profile.html'
+  login_url = 'login'
 
-#   def dispatch(self,request,*args,**kwargs):
-#     obj= self.get_object()
-#     if obj.user != self.request.user:
-#       raise PermissionDenied
-#     return super().dispatch(request,*args,**kwargs)
+  def dispatch(self,request,*args,**kwargs):
+    obj= self.get_object()
+    if obj.user != self.request.user:
+      raise PermissionDenied
+    return super().dispatch(request,*args,**kwargs)
 
 def profile(request,pk):
   customer = Customer.objects.get(user_id = request.user.id)
@@ -98,19 +98,6 @@ def customer_profile(request,pk):
   customer = Customer.objects.get(pk=pk)
   return render(request, 'app/customer_profile.html', {'customer':customer,})
 
-# def bikepost(request):
-#   if request.method == 'POST':
-    
-#     form=BikePostForm(request.POST,request.FILES)
-#     if form.is_valid():
-#       instance = form.save(commit=False)
-#       instance.user = request.user
-#       instance.save()
-#       messages.success(request, 'Bike post succesfully!!')
-      
-#   else:
-#     form = BikePostForm()
-#   return render(request, 'app/bikepost.html',{'form':form})
 
 def all_bikes(request):
   bikes = Bikepost.objects.all()
