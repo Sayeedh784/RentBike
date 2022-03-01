@@ -127,7 +127,7 @@
       {% for bike in post %}
       <div class="col-md-3">
         <div class=" card h-100">
-          <img src="{{ bike.bike_images.url }}" class="card-img-top" alt="No images">
+          <img src="{{ bike.bike_images.url }}" style="width: 100%; height: 30vh;" class="card-img-top" alt="No images">
           <div class="card-body">
             <h5 class="card-title">{{bike.bike_name}}</h5>
             <p><b>{{bike.rent_price}} per hour</b></p>
