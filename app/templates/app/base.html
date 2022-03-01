@@ -77,14 +77,14 @@
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="profileDropdown">
                     <li><a class="dropdown-item" href="{% url 'profile' user.id %}"> Profile</a></li>
-                    <li><a class="dropdown-item" href="{% url 'profileform' user.id %}">Update Profile</a></li>
+                    
                     <li><a class="dropdown-item" href="{% url 'passwordchange' %}">Change Password</a></li>
+                    <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
   
                   </ul>
                 </li>
-                <li class="nav-item mx-2">
-                  <a href="{% url 'logout' %}" class="nav-link" style="color: #6D0A15">Logout</a>
-                </li>
+                <img class="rounded-circle" src="{{ request.user.profile_image.url }}" id="img">
+                
                 {% else %}
                 <li class="nav-item mx-2">
                   <a href="{% url 'login' %}" class="nav-link" style="color: #6D0A15">Login</a>

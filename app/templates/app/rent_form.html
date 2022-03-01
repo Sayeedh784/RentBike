@@ -11,7 +11,7 @@
 <div class="container my-5" style="padding-top: 40px;">
   <div class="row">
 
-    <div class="col-md-10 mx-auto">
+    <div class="col-md-6 mx-auto">
       <div class="card shadow p-5">
         <div class="card-header text-black">
           <h2>Rent by {{request.user.username|capfirst}}</h2>
@@ -22,7 +22,7 @@
             {% if messages %}
             {% for message in messages %}
             <p {% if message.tags %} class="alert alert-{{message.tags}}
-            mb-5 {% endif %}">{{message}}</p>
+            mb-3 {% endif %}">{{message}}</p>
             {% endfor %}
             {% endif %}
 

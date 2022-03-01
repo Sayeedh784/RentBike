@@ -8,8 +8,8 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns=[
   path('',views.home,name="home"),
-  path('profileform/<str:pk>/',views.userprofileform,name="profileform"),
-#   path('update/<int:pk>/',views.CustomerUpdateView.as_view(),name="update"),
+#   path('profileform/<str:pk>/',views.userprofileform,name="profileform"),
+  path('update/<int:pk>/',views.CustomerUpdateView.as_view(),name="update"),
   path('customer-profile/<str:pk>/',views.customer_profile,name="customer-profile"),
   path('profile/<str:pk>/',views.profile,name="profile"),
   path('rentform/<str:pk>/',views.rent_bike_form,name="rentform"),
