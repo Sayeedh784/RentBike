@@ -44,7 +44,7 @@
                 <a href="" class="nav-link" style="color: #6D0A15;">Bikes</a>
               </li> -->
              
-              {% if request.user.is_authenticated %}
+              
               <li class="nav-item mx-2">
                 <a href="{% url 'bikepost' %}" class="nav-link" style="color: #6D0A15;">Post a Bike</a>
               </li>
@@ -57,7 +57,7 @@
               <li class="nav-item mx-2">
                 <a href="{% url 'rent-history' %}" class="nav-link" style="color: #6D0A15;">Rent History</a>
               </li>
-              {% endif %}
+              
             </ul>
             <form class="d-flex input-group w-auto" method="POST" action="{% url 'search' %}">
               {% csrf_token %}
@@ -79,11 +79,13 @@
                     <li><a class="dropdown-item" href="{% url 'profile' user.id %}"> Profile</a></li>
                     
                     <li><a class="dropdown-item" href="{% url 'passwordchange' %}">Change Password</a></li>
-                    <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                    
   
                   </ul>
                 </li>
-                <img class="rounded-circle" src="{{ request.user.profile_image.url }}" id="img">
+                <li class="nav-item mx-2">
+                  <a href="{% url 'logout' %}" class="nav-link" style="color: #6D0A15">Logout</a>
+                </li>
                 
                 {% else %}
                 <li class="nav-item mx-2">

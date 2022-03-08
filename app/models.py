@@ -12,7 +12,7 @@ class User(AbstractUser):
   is_customer = models.BooleanField(default=False)
 
 class Customer(models.Model):
-  user=models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True)
+  user=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,blank=True,null=True)
   first_name=models.CharField(max_length=30,blank=True,null=True)
   last_name=models.CharField(max_length=30,blank=True,null=True)
   mobile = models.CharField(validators=[MinLengthValidator(11), MaxLengthValidator(11)],max_length=11,blank=True,null=True)
@@ -26,6 +26,9 @@ class Customer(models.Model):
 
   def __str__(self):
     return str(self.id)
+
+  def get_absolute_url(self):
+    return reverse('customer-profile', args=[str(self.id)])
 
 CONDITION=(
   ('Old','Old'),
