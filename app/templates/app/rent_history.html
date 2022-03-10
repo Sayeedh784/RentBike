@@ -8,16 +8,17 @@
 
 <div class="container my-5" style="padding-top: 80px;">
   <center>
-    <h2>Rent History</h2>
+    <h1>Rent History</h1>
   </center>
   <br><br>
   <div class="row">
     <div class="col-md-12 table-responsive">
       <table class="table table-striped">
-        <thead>
+        <!-- <thead style="background-color: #6D0A15; color: white;"> -->
+          <thead>
           <tr>
             <th scope="col">Serial no</th>
-            <th scope="col">bike owner name</th>
+            <th scope="col">Bike owner name</th>
             <th scope="col">Bike owner Email</th>
             <th scope="col">Bike name</th>
             <th scope="col">Pick Up Date</th>
@@ -35,15 +36,15 @@
           <tr>
             <th scope="row">{{forloop.counter}}</th>
             <td>{{rent.post_user.post_user.username}}</td>
-            <td>{{rent.post_user.post_user.email}}</td>
+            <td>{{ rent.post_user.post_user.email }}</td>
             <td>{{rent.post_user.bike_name}}</td>
             <td>{{rent.pick_up_date}}</td>
             <td>{{rent.drop_off_date}}</td>
             <td>{{rent.pick_up_location}}</td>
             <td>{{rent.drop_off_location}}</td>
             <td>{{rent.pick_up_time}}</td>
-            {% if rent.request_status == "pending" %}
-            <td style="color: red;">{{rent.request_status}} <span><a href="{% url 'cancel' rent.rent_user.id %}" role="button" class="btn btn-sm btn-danger">Cancel</a></span></td>
+            {% if rent.request_status == "Pending" %}
+            <td style="color: red;">{{rent.request_status}} <span><a href="{% url 'cancel' rent.pk %}" role="button" class="btn btn-sm btn-danger">Cancel</a></span></td>
             {% elif rent.request_status == "Decline" %}
             <td style="color: red;">{{rent.request_status}} </td>
             {% elif rent.request_status == "Accepted" %}

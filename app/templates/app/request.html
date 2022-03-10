@@ -6,7 +6,7 @@
 {% block main-content %}
 
 <div class="container my-5" style="padding-top: 80px;">
-  <center><h2>Rent Request</h2></center>
+  <center><h1>Rent Request</h1></center>
   <br><br>
   <div class="row">
     <div class="col-md-12 table-responsive">
@@ -41,7 +41,7 @@
             <td>{{rent.drop_off_location}}</td>
             <td>{{rent.pick_up_time}}</td>
             {% if rent.request_status == "Pending" %}
-            <td><span><a href="{% url 'accept' rent.rent_user.id %}" class="btn btn-sm btn-success">Accept</a></span> <span><a href="{% url 'decline' rent.rent_user.id %}" role="button" class="btn btn-sm btn-danger">Decline</a></span> </td>
+            <td><span><a href="{% url 'accept' rent.pk %}" class="btn btn-sm btn-success">Accept</a></span> <span><a href="{% url 'decline' rent.pk %}" role="button" class="btn btn-sm btn-danger">Decline</a></span> </td>
             {% elif rent.request_status == "Decline" %}
             <td style="color: red;">{{rent.request_status}} </td>
             {% elif rent.request_status == "Accepted" %}

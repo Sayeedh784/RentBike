@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,27 +13,57 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <!--Owl Carousel CSS-->
   <link rel="stylesheet" href="{% static 'app/css/owl.carousel.min.css' %}">
-  
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Meera+Inimai&display=swap" rel="stylesheet">
+
   <!--FontAwesome CSS-->
   <link rel="stylesheet" href="{% static 'app/css/all.min.css' %}">
-  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+
   <!--Custom CSS-->
-  <link href="{% static 'app/css/style.css' %} rel="stylesheet" ">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
+  <link href="{% static 'app/css/style.css' %} rel=" stylesheet" ">
+  <link rel=" stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
 
   <title>BikeRent | {% block title %} {% endblock title %} </title>
 </head>
-<body>
-<style>
 
-</style>
+<body>
+  <style>
+    body {
+      font-family: 'Meera Inimai', sans-serif;
+    }
+
+    h1 {
+      font-family: 'Righteous', cursive;
+    }
+
+    nav {
+      height: 70px;
+    }
+
+    nav li a {
+      transition: all .7s ease !important;
+    }
+
+    nav li a:hover {
+      background-color: #6D0A15;
+      color: white !important;
+    }
+  </style>
+
   <div class="row">
     <div class="col-sm-12 col-md-12 col-lg-12">
       <nav id="nav" class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: white;">
         <div class="container">
-          <a class="navbar-brand" href="/"><span style="color: black;"><b>Rent</b></span><span style="color: #6D0A15;"><b>Bike</b></span></a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <a class="mx-3" href="/"><img style="width: 150px; height: auto;"
+              src="{% static 'app/images/banner/logo-01.png' %}" alt=""></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -40,11 +71,16 @@
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" style="color: #6D0A15;" href="/">Home</a>
               </li>
+              <!-- <li class="nav-item mx-2">
+                <a href="" class="nav-link" style="color: #6D0A15;">Bikes</a>
+              </li> -->
+
+
               <li class="nav-item mx-2">
-                <a href="{% url 'bikes' %}" class="nav-link" style="color: #6D0A15;">Bikes</a>
+                <a href="{% url 'bikepost' %}" class="nav-link" style="color: #6D0A15;">Post a Bike</a>
               </li>
               <li class="nav-item mx-2">
-                <a href="" class="nav-link" style="color: #6D0A15;">Contact</a>
+                <a href="{% url 'bikes' %}" class="nav-link" style="color: #6D0A15;">Rent a Bike</a>
               </li>
               {% if request.user.is_authenticated %}
               <li class="nav-item mx-2">
@@ -55,17 +91,17 @@
               </li>
               {% endif %}
             </ul>
-            <form class="d-flex input-group w-auto" method="POST" action="">
+            <form class="d-flex input-group w-auto" method="POST" action="{% url 'search' %}">
               {% csrf_token %}
-              <input type="search" class="form-control rounded" name="q" placeholder="Search Here" aria-label="Search"
-                aria-describedby="search-addon" />
+              <input type="search" class="form-control rounded" name="q" placeholder="Search by Bike name"
+                aria-label="Search" aria-describedby="search-addon" />
               <button type="submit" class="btn" style="background-color:#6D0A15;"><i class="fas fa-search"
                   style="color: white;"></i></button>
             </form>
             <div>
-              
+
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              {% if request.user.is_authenticated %}
+                {% if request.user.is_authenticated %}
                 <li class="nav-item dropdown mx-2">
                   <a class="nav-link dropdown-toggle" style="color: #6D0A15" href="#" id="profileDropdown" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -73,26 +109,28 @@
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="profileDropdown">
                     <li><a class="dropdown-item" href="{% url 'profile' user.id %}"> Profile</a></li>
-                    <li><a class="dropdown-item" href="">Update Profile</a></li>
+
                     <li><a class="dropdown-item" href="{% url 'passwordchange' %}">Change Password</a></li>
-  
+
+
                   </ul>
                 </li>
                 <li class="nav-item mx-2">
                   <a href="{% url 'logout' %}" class="nav-link" style="color: #6D0A15">Logout</a>
                 </li>
+
                 {% else %}
                 <li class="nav-item mx-2">
                   <a href="{% url 'login' %}" class="nav-link" style="color: #6D0A15">Login</a>
                 </li>
-                
-                
+
+
                 <li class="nav-item mx-2">
                   <a href="{% url 'registration' %}" class="nav-link" style="color: #6D0A15;">Registration</a>
                 </li>
-              {% endif %}
+                {% endif %}
               </ul>
-              
+
             </div>
           </div>
         </div>
@@ -100,123 +138,52 @@
     </div>
   </div>
 
- {% block slider %}
- {% endblock slider %}
+  {% block slider %}
+  {% endblock slider %}
   {% block main-content %}
   {% endblock main-content %}
 
-<br><br>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-12">
-  
-        <footer class=" text-center text-lg-start text-white" style="background-color: rgb(12, 10, 10)">
-          <!-- Section: Social media -->
-          <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
-            <!-- Left -->
-            <div class="me-5 d-none d-lg-block">
-              <span>
-                <h4>Get connected with us on social networks:</h4>
-              </span>
-            </div>
-            <!-- Left -->
-  
-            <!-- Right -->
-            <div>
-              <a href="" class="me-4 text-reset">
-                <i class="fab fa-facebook-f"></i>
-              </a>
-              <a href="" class="me-4 text-reset">
-                <i class="fab fa-twitter"></i>
-              </a>
-              <a href="" class="me-4 text-reset">
-                <i class="fab fa-google"></i>
-              </a>
-              <a href="" class="me-4 text-reset">
-                <i class="fab fa-instagram"></i>
-              </a>
-              <a href="" class="me-4 text-reset">
-                <i class="fab fa-linkedin"></i>
-              </a>
-  
-            </div>
-            <!-- Right -->
-          </section>
-          <!-- Section: Social media -->
-  
-          <!-- Section: Links  -->
-          <section class="">
-            <div class="container text-center text-md-start mt-5">
-              <!-- Grid row -->
-              <div class="row mt-3">
-                <!-- Grid column -->
-                <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-                  <!-- Content -->
-                  <h4 class="text-uppercase fw-bold mb-4">
-                    <i class="fas fa-gem me-3"></i>BikeRent
-                  </h4>
-                  <p>
-                    Here we connect you for grow your business.
-                  </p>
-                </div>
-  
-                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-                  <!-- Links -->
-                  <h6 class="text-uppercase fw-bold mb-4">
-                    Useful links
-                  </h6>
-                  <p>
-                    <a href="" style="text-decoration: none;" class="text-reset">Home</a>
-                  </p>
-                  <p>
-                    <a href="" style="text-decoration: none;" class="text-reset">Startups</a>
-                  </p>
-                  <p>
-                    <a href="" style="text-decoration: none;" class="text-reset">Investors</a>
-                  </p>
-                  <p>
-                    <a href="" style="text-decoration: none;" class="text-reset">People</a>
-                  </p>
-                  <p>
-                    <a href="" style="text-decoration: none;" class="text-reset">Article</a>
-                  </p>
-                </div>
-                <!-- Grid column -->
-  
-                <!-- Grid column -->
-                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-                  <!-- Links -->
-                  <h6 class="text-uppercase fw-bold mb-4">
-                    Contact
-                  </h6>
-                  <p><i class="fas fa-home me-3"></i>Dhanmondi,Dhaka,Bangladesh</p>
-                  <p>
-                    <i class="fas fa-envelope me-3"></i>
-                    sayeedh74@gmail.com
-                  </p>
-                  <p><i class="fas fa-phone me-3"></i> 01309319376</p>
-  
-                </div>
-                <!-- Grid column -->
-              </div>
-              <!-- Grid row -->
-            </div>
-          </section>
-          <!-- Section: Links  -->
-  
-          <!-- Copyright -->
-          <!-- <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-        © 2021 Copyright:
-        <a class="text-reset fw-bold" href="https://mdbootstrap.com/"></a>
-      </div> -->
-  
-          <!-- Copyright -->
-        </footer>
+  <br><br>
+
+  <style>
+    .icons a{
+      transition: all ease .6s;
+    }
+    .icons a:hover{
+      color: #6D0A15 !important;
+    }
+  </style>
+  <div class="container-fluid" style="background-color: rgb(20, 20, 20)">
+    <footer>
+      <div class="row">
+        <div class="col-md-4 text-center my-auto">
+          <img style="width: 50%; height: auto;" src="{% static 'app/images/banner/logo-footer-01.png' %}" alt="">
+          <h6 class="px-5 my-3" style="color: white;">RentBike is a platform that works as a middleware between a bike
+            renter and a lender.</h6>
+        </div>
+        <div class="col-md-4 text-center mt-5">
+          <h3 class="mb-4" style="color: white;">Contact</h3>
+          <h6 class="mt-1" style="color: white;">Sukrabad, Dhanmondi <br>
+            Dhaka-1209, Bangladesh <br> <br> Mobile: 01302000011 <br> Email: pranto@gmail.com
+          </h6>
+        </div>
+        <div class="col-md-4 text-center my-auto icons">
+          <a style="color: white;" href=""><i class="fab fa-facebook-square fa-2x"></i></a>
+          <a style="color: white;" href=""><i class="fab fa-instagram-square fa-2x mx-2"></i></a>
+          <a style="color: white;" href=""><i class="fab fa-twitter-square fa-2x me-2"></i></a>
+          <a style="color: white;" href=""><i class="fab fa-youtube-square fa-2x"></i></a>
+        </div>
+      </div> <br> <br>
+      <div class="row pb-3">
+        <div class="col-md-12 text-center" style="color: white;">
+          <h6>©RentBike. All rights reserved @2022</h6>
+        </div>
       </div>
-    </div>
+    </footer>
   </div>
-  <!-- Footer -->
   <!-- End Footer -->
+
+
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
       class="bi bi-arrow-up-short"></i></a>
   <!-- Jquery -->
@@ -224,16 +191,22 @@
     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
   <!-- Bootstrap Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+    crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
   <script src="{% static 'app/js/owl.carousel.min.js' %}"></script>
   <script src="{% static 'app/js/all.min.js' %}"></script>
   <script src="{% static 'app/js/myscript.js' %}"></script>
 </body>
+
 </html>
