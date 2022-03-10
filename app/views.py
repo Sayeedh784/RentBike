@@ -183,22 +183,25 @@ def rent_history(request):
 
 
 def cancelRequest(request,pk):
+  url=request.META.get('HTTP_REFERER')
   # bike = Rentbike.objects.get(rent_user=rent_user)
   bike = get_object_or_404(Rentbike, id=pk)
   bike.delete()
-  return redirect('home')
+  return redirect(url)
   # return render(request, 'app/rent_history.html', {'bike': bike})
 
 def decline(request,pk):
+  url=request.META.get('HTTP_REFERER')
   bike = get_object_or_404(Rentbike, pk=pk)
   bike.request_status = "Decline"
   bike.save()
-  return redirect('home')
+  return redirect(url)
   # return render(request, 'app/request.html',{'bike':bike})
 
 def accept(request,pk):
+  url=request.META.get('HTTP_REFERER')
   bike = get_object_or_404(Rentbike, pk=pk)
   bike.request_status = "Accepted"
   bike.save()
-  return redirect('home')
+  return redirect(url)
   # return render(request, 'app/request.html',{'bike':bike})
