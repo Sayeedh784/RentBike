@@ -7,63 +7,102 @@
 
 
 {% block main-content %}
-  <img src="{% static 'app/images/banner/bikecover1.png' %}" style="width: 100%; height: 600px;" alt="">
+<img src="{% static 'app/images/banner/hero-area-banner1.jpg' %}" style="width: 100%; max-height: 750px;" alt="">
 
-  <div class="container my-5">
-    <center><h2>How this platform work?</h2></center>
-    <div class="row">
-      <div class="col-md-1"></div>
-      <div class="col-md-3">
-        <div class="card my-5 " style="border: none;">
+<div class="container my-5">
+  <center>
+    <h1>How This Platform Works?</h1>
+  </center>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card my-5" id="card" style="border: none;">
+        <center>
+          <i class="fas fa-map-marked-alt fa-3x" style="color: #e9dd38;"></i>
+        </center>
+        <div class="card-footer" style="border: none;">
           <center>
-            <i class="fas fa-map-marked-alt fa-3x" style="color: #e9dd38;"></i>
+            <h4>Choose your location</h4>
           </center>
-          <div class="card-footer" style="border: none;">
-            <center><h4>Choose your location</h4></center>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="card my-5 " style="border: none;">
-          <center>
-            <i class="far fa-handshake fa-3x" style="color: #e9dd38;"></i>
-          </center>
-          <div class="card-footer" style="border: none;">
-            <center><h4>Select your best deal</h4></center>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="card my-5 " style="border: none;">
-          <center>
-            <i class="fas fa-motorcycle fa-3x" style="color: #e9dd38;"></i>
-          </center>
-          <div class="card-footer" style="border: none;">
-            <center><h4>Reserve and post your rental bike</h4></center>
-          </div>
         </div>
       </div>
     </div>
-
+    <div class="col-md-4">
+      <div class="card my-5 " id="card" style="border: none;">
+        <center>
+          <i class="far fa-handshake fa-3x" style="color: #e9dd38;"></i>
+        </center>
+        <div class="card-footer" style="border: none;">
+          <center>
+            <h4>Select your best deal</h4>
+          </center>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card my-5 " id="card" style="border: none;">
+        <center>
+          <i class="fas fa-motorcycle fa-3x" style="color: #e9dd38;"></i>
+        </center>
+        <div class="card-footer" style="border: none;">
+          <center>
+            <h4>Send rent request</h4>
+          </center>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
 
-  <div class="container my-5">
-    <center><h1>Why riding bikes from <span style="color: black;"><b>Rent</b></span><span style="color: #6D0A15;"><b>Bike</b></span> pleases you</h1></center>
-    <div class="row">
-      <div class="col-md-3"></div>
-      <div class="col-md-6 text-muted">
-        <center>Low cost, no hidden charge, quick ride finding- add all these to the beauty of bangladesh and you will discover
-          a new
-          way of maintaining communication that you’ve never experinced before.</center>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 my-auto">
+      <div class="card py-3" style="background-color: #6D0A15;color: white;">
+        <div class="row">
+          <div class="col-md-6 text-center">
+            <h2>{{total_bikes}}+</h2>
+            <h3>Bikes</h3>
+          </div>
+          <div class="col-md-6 text-center">
+            <h2>{{total_customer}}+</h2>
+            <h3>Users</h3>
+          </div>
+        </div>
       </div>
     </div>
+    <div class="col-md-6">
+      <img style="width: 100%; height: auto;" src="{% static 'app/images/banner/motorbike-safety.jpg' %}" alt="">
+    </div>
+  </div>
+</div>
+
+<br><br>
+
+<style>
+  #card {
+    transition: all 0.6s ease-in-out;
+
+  }
+
+  #card:hover {
+
+    transform: scale(1.1);
+  }
+</style>
+
+<div class="container-fluid pt-2" style="background-color: rgb(241, 241, 241);">
+  <div class="container my-5">
+    <center>
+      <h1>How <span style="color: black;"><b>Rent</b></span><span style="color: #6D0A15;"><b>Bike</b></span> Pleases
+        You?</h1>
+    </center>
     <div class="row">
       <div class="col-md-3">
-        <div class="card my-5 " style="border: none;">
+        <div class="card my-5 pt-4" id="card" style="border: none;">
           <center>
-            <i class="fas fa-map-marked-alt fa-4x" style="color: #e9dd38;"></i>
+            <i style="color: #e9dd38;"><img style="width: 60px; height: 60px;"
+                src="{% static 'app/images/icons/affordable-01.svg' %}" alt=""></i>
           </center>
-          <div class="card-footer" style="border: none;">
+          <div class="card-footer my-4" style="border: none; background-color: rgb(34, 34, 34); color: #e9dd38;">
             <center>
               <h4>Affordable and worthy</h4>
             </center>
@@ -71,64 +110,82 @@
         </div>
       </div>
       <div class="col-md-3">
-        <div class="card my-5 " style="border: none;">
+        <div class="card my-5 pt-4" id="card" style="border: none;">
           <center>
-            <i class="fas fa-motorcycle fa-4x" style="color: #e9dd38;"></i>
+            <i class="fa fa-tags fa-3x" style="color: #6D0A15;"></i>
           </center>
-          <div class="card-footer" style="border: none;">
+          <div class="card-footer my-3" style="border: none; background-color: rgb(34, 34, 34); color: #e9dd38;">
             <center>
-              <h4>Going around and explore the natural beauty!</h4>
+              <h4>No hidden charge</h4>
             </center>
           </div>
         </div>
       </div>
       <div class="col-md-3">
-        <div class="card my-5 " style="border: none;">
+        <div class="card my-5 pt-4" id="card" style="border: none;">
           <center>
-            <i class="far fa-clock fa-4x" style="color: #e9dd38;"></i>
+            <i style="color: #e9dd38;"><img style="width: 60px; height: 60px;"
+                src="{% static 'app/images/icons/taka-01.svg' %}" alt=""></i>
           </center>
-          <div class="card-footer" style="border: none;">
+          <div class="card-footer my-4" style="border: none; background-color: rgb(34, 34, 34); color: #e9dd38;">
             <center>
-              <h4>Find your vehicle easily - they are on every corner!</h4>
+              <h4>Post bike & earn money</h4>
             </center>
           </div>
         </div>
       </div>
       <div class="col-md-3">
-        <div class="card my-5 " style="border: none;">
+        <div class="card my-5 pt-4" id="card" style="border: none;">
           <center>
-            <i class="fas fa-map-marked-alt fa-4x" style="color: #e9dd38;"></i>
+            <i class="far fa-check-circle fa-3x" style="color: #6D0A15;"></i>
           </center>
-          <div class="card-footer" style="border: none;">
+          <div class="card-footer my-3" style="border: none; background-color: rgb(34, 34, 34); color: #e9dd38;">
             <center>
-              <h4>Affordable and worthy</h4>
+              <h4>Nice availability</h4>
             </center>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <div class="container">
-    <div class="row">
-      <div class="col-md-2"></div>
-      <div class="col-md-6">
-        <div class="card">
-          <div class="row">
-            <div class="col-md-3"></div>
-            <div class="col-md-3">
-              <h4>100+</h4>
-              <h5>Bikes</h5>
-            </div>
-            <div class="col-md-3">
-              <h4>100+</h4>
-              <h5>Users</h5>
-            </div>
-          </div>
-        </div>
+<div class="container">
+  <center class="mb-5">
+    <h1>Frequently Asked Questions (FAQ)</h1>
+  </center>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card p-3">
+        <h5><strong>How to rent a bike?</strong></h5>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At illo nam quia voluptatibus ipsam saepe
+          aspernatur, architecto alias rerum in!</p>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card p-3">
+        <h5><strong>How to rent a bike?</strong></h5>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At illo nam quia voluptatibus ipsam saepe
+          aspernatur, architecto alias rerum in!</p>
+      </div>
+    </div>
+  </div> <br>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card p-3">
+        <h5><strong>How to rent a bike?</strong></h5>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At illo nam quia voluptatibus ipsam saepe
+          aspernatur, architecto alias rerum in!</p>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card p-3">
+        <h5><strong>How to rent a bike?</strong></h5>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At illo nam quia voluptatibus ipsam saepe
+          aspernatur, architecto alias rerum in!</p>
       </div>
     </div>
   </div>
+</div>
 
- 
 {% endblock main-content %}

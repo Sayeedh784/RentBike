@@ -19,7 +19,12 @@ from django.views.generic.edit import UpdateView,DeleteView,CreateView
 
 # Create your views here.
 def home(request):
-  return render(request,'app/home.html')
+  bikes = Bikepost.objects.all()
+  total_bikes=bikes.count()
+  customer = Customer.objects.all()
+  total_customer = customer.count()
+  context={'total_bikes':total_bikes,'total_customer':total_customer}
+  return render(request,'app/home.html',context)
 
 def search_list(request):
   if request.method == 'POST':
@@ -63,18 +68,7 @@ class CustomerRegistration(View):
       return redirect('login')
     return render(request, 'app/customerregistration.html',{'form':form})
 
-# def userprofileform(request,pk):
-#   if request.method == 'POST':
-#     obj = get_object_or_404(Customer, user_id=request.user.id)
-#     form = CustomerForm(request.POST, request.FILES, instance=obj)
-#     if form.is_valid():
-#       messages.success(request,'Congratulations profile Updated successfully!!!!')
-#       form.save()
-      
-#   else:
-#     form = CustomerForm()
-#   context = {'form':form}
-#   return render(request, 'app/user_profile.html',context)
+
 
 class CustomerUpdateView(LoginRequiredMixin,UpdateView):
   model = Customer
