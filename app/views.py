@@ -157,7 +157,7 @@ def rent_bike_form(request,pk):
       instance = form.save(commit=False)
       instance.rent_user = request.user
       instance.save()
-      messages.success(request, 'Congratulations You request sent succesfully!!!')
+      messages.success(request, 'Congratulations Your request sent succesfully!!!')
       
   else:
     form = RentBikeForm()
