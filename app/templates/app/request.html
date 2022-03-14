@@ -16,6 +16,7 @@
             <th scope="col">Serial no</th>
             <th scope="col">Renter name</th>
             <th scope="col">Renter Email</th>
+            <th scope="col">Renter Mobile</th>
             <th scope="col">Bike name</th>
             <th scope="col">Pick Up Date</th>
             <th scope="col">Drop-off-Date</th>
@@ -23,17 +24,20 @@
             <th scope="col">Drop-Off-Location</th>
             <th scope="col">Pick Up Time</th>
             <th scope="col">Request Status</th>
+            <th scope="col">Delivery Status</th>
+            
             
           </tr>
         </thead>
         {% for rent in rent_request %}
         
-        {% if rent.post_user.post_user.pk == request.user.pk %}
+        {% if rent.post_user.post_user.user.pk == request.user.pk %}
         <tbody>
           <tr>
             <th scope="row">{{forloop.counter}}</th>
-            <td>{{rent.rent_user.username}}</td>
+            <td><a href="{% url 'customer-profile' rent.rent_user.id %}">{{rent.rent_user.user.username}}</a></td>
             <td>{{rent.rent_user.email}}</td>
+            <td>{{rent.rent_user.mobile}}</td>
             <td>{{rent.post_user.bike_name}}</td>
             <td>{{rent.pick_up_date}}</td>
             <td>{{rent.drop_off_date}}</td>
@@ -47,7 +51,15 @@
             {% elif rent.request_status == "Accepted" %}
             <td style="color: green;">{{rent.request_status}} </td>
             {% endif %}
-            
+            {% if rent.delivery_status == "Pending" %}
+            <td style="color: red;">{{ rent.delivery_status }}</td>
+            {% elif rent.request_status == "Accepted" %}
+            <td><span><a href="{% url 'handover' rent.pk %}" class="btn btn-sm btn-success">Handoverd</a></span>  <span><a href="{% url 'notreturn' rent.pk %}" role="button" class="btn btn-sm btn-danger">Not Return</a></span></td>
+            {% elif rent.delivery_status == "HandOvered" %}
+            <td>{{rent.delivery_status}}</td>
+            {% elif rent.delivery_status == "NotReturn" %}
+            <td>{{rent.delivery_status}}</td>
+            {% endif %}
           </tr>
           
           

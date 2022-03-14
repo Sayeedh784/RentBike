@@ -1,7 +1,9 @@
 from django.contrib import admin
 from .models import *
 # Register your models here.
-admin.site.register(User)
+@admin.register(User)
+class Adminadmin(admin.ModelAdmin):
+  list_display=['id','username']
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
   list_display = ['id','first_name','nid']

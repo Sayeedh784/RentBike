@@ -20,9 +20,12 @@ urlpatterns=[
   path('cancel/<int:pk>/',views.cancelRequest,name="cancel"),
   path('decline/<int:pk>/',views.decline,name="decline"),
   path('accept/<int:pk>/',views.accept,name="accept"),
+  path('handover/<int:pk>/',views.handover,name="handover"),
+  path('notreturn/<int:pk>/',views.notReturn,name="notreturn"),
   path('search/',views.search_list,name="search"),
   
   path('bikepost/',views.BikePostCreateView.as_view(),name='bikepost'),
+#   path('bikepost1/<int:pk>/',views.postbike,name='bikepost1'),
   path('bike-detail/<int:pk>/',BikeDetailView.as_view(), name='bike-detail'),
   path('post/<int:pk>/edit/',PostUpdateView.as_view(), name='post_edit'),
   path('post/<int:pk>/delete/',PostDeleteView.as_view(), name='post_delete'),

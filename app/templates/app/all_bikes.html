@@ -38,13 +38,15 @@
             <p class="card-text">Milage Covered:{{bike.milage_covered}} | Milage/Liter:{{bike.milagePerliter}}
             </p>
             <br>
-            {% if bike.post_user.pk == request.user.pk %}
+            {% if bike.post_user.user.pk == request.user.pk %}
             <!-- <a href="{% url 'bike-detail' bike.id %}" class="btn btn-primary">My bike</a> -->
             <div class="card-footer" style="background-color: #6D0A15; color: white;">
               <center><h3>My Bike</h3></center>
             </div>
             {% else %}
-            <a href="{% url 'bike-detail' bike.pk %}" class="btn btn-primary">Show Details</a>
+            <a href="{% url 'bike-detail' bike.pk %}" class="btn btn-primary">See Details</a>
+            
+            <a href="{% url 'customer-profile' bike.post_user.id %}" class="btn btn-primary">See owner profile</a>
             {% endif %}
           </div>
         </div>

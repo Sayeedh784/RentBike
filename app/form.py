@@ -16,6 +16,7 @@ class CustomerRegistrationFrom(UserCreationForm):
   PasswordInput(attrs={'class':'form-control'}))
   email = forms.CharField(required=True,widget=forms.
   EmailInput(attrs={'class':'form-control'}))
+  
 
   class Meta:
     model=User
@@ -43,7 +44,7 @@ class CustomerForm(forms.ModelForm):
 class BikePostForm(forms.ModelForm):
   class Meta:
     model = Bikepost
-    fields = ['bike_images','bike_name','rent_price','bike_description','drop_off_location']
+    fields = ['bike_images','bike_name','rent_price','bike_description','drop_off_location','is_available']
     
 
 class RentBikeForm(forms.ModelForm):

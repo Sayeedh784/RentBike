@@ -37,11 +37,7 @@
          
          
           {% elif request.user.is_authenticated %}
-          <div class="col-md-2 text-center">
-            <div class="flex-row">
-              <a href="" class="btn btn-lg" style="background-color: #6D0A15; color: white;">Message</a>
-            </div>
-          </div>
+       
           {% else %}
           <div class="col-md-4 text-center">
             <div class="flex-row">
@@ -76,7 +72,7 @@
               <p><b><i class="far fa-user-circle"></i> username:</b></p>
             </div>
             <div class="col-6">
-              <p><b>{{request.user.username}}</b></p>
+              <p><b>{{customer.user.username}}</b></p>
             </div>
           </div>
           <div class="row">
@@ -108,12 +104,17 @@
     </div>
     <div class="col-md-4">
       <div class="card" style="width: 18rem;">
+        {% if customer.Photo_of_licence %}
         <img src="{{ customer.Photo_of_licence.url }}" class="card-img-top" alt="...">
+        {% else %}
+        <img src="{% static 'app/images/banner/cover.png' %}" alt="">
+        {% endif %}
         <div class="card-body">
           <h5 class="card-title text-center">Driving Licence</h5>
       </div>
     </div>
   </div>
+</div>
 </div>
 
 
@@ -139,9 +140,10 @@
       {% endfor %}
     </div>
   </div>
-  {% elif request.user.is_authenticated %}
+  {% else %}
   <div class="container my-4" style="padding-top: 80px;">
     <center><h3>Total available bikes</h3></center>
+    <hr>
     <div class="row">
       {% for bike in post %}
       {% if bike.is_available %}
@@ -153,7 +155,7 @@
             <p><b>{{bike.rent_price}} per hour</b></p>
             <p class="card-text">Milage Covered:{{bike.milage_covered}} | Milage Per Liter:{{bike.milagePerliter}}
             </p>
-            <a href="#" class="btn btn-primary">Book Now</a> 
+            <a href="{% url 'bike-detail' bike.id %}" class="btn btn-primary">See Details</a> 
           </div>
         </div>
   
@@ -163,7 +165,7 @@
     </div>
   </div>
   {% endif %}
-</div>
+
 
 
 
