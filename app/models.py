@@ -37,7 +37,7 @@ CONDITION=(
 )
 
 class Bikepost(models.Model):
-  post_user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,blank=True,null=True)
+  post_user = models.ForeignKey(Customer,on_delete=models.CASCADE,blank=True,null=True)
   bike_id = models.AutoField
   bike_images = models.ImageField(upload_to='images',blank=True,null=True)
   bike_name = models.CharField(max_length=50,blank=True,null=True)
@@ -54,7 +54,7 @@ class Bikepost(models.Model):
     return reverse('bike-detail', args=[str(self.id)])
 
 class Rentbike(models.Model):
-  rent_user= models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True)
+  rent_user= models.ForeignKey(Customer,on_delete=models.CASCADE,blank=True,null=True)
   post_user = models.ForeignKey(Bikepost,on_delete=models.CASCADE,null=True,blank=True)
   pick_up_location = models.CharField(max_length=100,blank=True,null=True)  
   drop_off_location = models.CharField(max_length=100,blank=True,null=True)
@@ -62,10 +62,21 @@ class Rentbike(models.Model):
   drop_off_date = models.DateField()
   pick_up_time=models.TimeField() 
   request_status = models.CharField(max_length=30,default="Pending")
+  delivery_status = models.CharField(max_length=30,default="Pending")
   
 
   def __str__(self):
     return str(self.id)
 
 
-  
+class ReviewRating(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    review = models.TextField(max_length=500, blank=True)
+    rating = models.IntegerField()
+    status = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+      return str(self.id)

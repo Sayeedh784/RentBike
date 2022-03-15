@@ -17,15 +17,19 @@
       <h5>Drop-Off-Location: {{object.drop_off_location}}</h5>
       <br>
       
-      {% if object.post_user.pk == request.user.pk %}
+      {% if object.post_user.user.pk == request.user.pk %}
       <a href=""></a>
       {% else %}
+     
       <a href="{% url 'rentform' object.id %}" role="button" class="btn btn-primary">Book Now</a>
       {% endif %}
       <br>
     </div>
   </div>
 </div>
+
+
+
 <br>
 <div class="container">
   <div class="row">

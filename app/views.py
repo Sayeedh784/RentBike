@@ -61,7 +61,7 @@ class CustomerRegistration(View):
     form = CustomerRegistrationFrom()
     return render(request,'app/customerregistration.html',{'form':form})
   def post(self,request):
-    form = CustomerRegistrationFrom(request.POST)
+    form = CustomerRegistrationFrom(request.POST,request.FILES)
     if form.is_valid():
       messages.success(request,"Congratulations!!! Registered successfully Login Now")
       form.save()
@@ -84,13 +84,18 @@ class CustomerUpdateView(LoginRequiredMixin,UpdateView):
 
 def profile(request,pk):
   customer = Customer.objects.get(user_id = request.user.id)
-  post = Bikepost.objects.filter(post_user_id = request.user.id)
+  post = Bikepost.objects.filter(post_user = Customer.objects.get(user_id=request.user.id))
   posts=post.count()
-  return render(request, 'app/customer_profile.html',{'customer':customer,'post':post,'posts':posts})
+  reviews = ReviewRating.objects.filter(customer_id=customer.id, status=True)
+  count = reviews.count()
+  return render(request, 'app/customer_profile.html',{'customer':customer,'post':post,'posts':posts,'reviews':reviews,'count':count})
 
 def customer_profile(request,pk):
   customer = Customer.objects.get(pk=pk)
-  return render(request, 'app/customer_profile.html', {'customer':customer,})
+  post = Bikepost.objects.filter(post_user = Customer.objects.get(user_id=request.user.id))
+  reviews = ReviewRating.objects.filter(customer_id=customer.id, status=True)
+  count = reviews.count()
+  return render(request, 'app/customer_profile.html', {'customer':customer,'post':post,'reviews':reviews,'count':count})
 
 
 def all_bikes(request):
@@ -107,6 +112,21 @@ def all_bikes(request):
   
   return render(request, 'app/all_bikes.html',{'bikes':bikes,'page':page,'myfilter': myfilter,'all_bike':all_bike,'all_cus':all_cus,'customer':customer,'rent_bike':rent_bike})
 
+
+# def postbike(request,pk):
+#   if request.method == "POST":
+#     form = BikePostForm(request.POST,request.FILES)
+#     if form.is_valid():
+#       form.instance.post_user = Customer.objects.get(user_id=request.user.id)
+#       instance = form.save(commit=False)
+#       instance.save()
+#       messages.success(request, 'Congratulations,Bike post succesfully!!!')
+#   else:
+#     form = BikePostForm()
+#   context = {'form':form}
+#   return render(request, 'app/bikepost.html',context)
+
+
 class BikePostCreateView(LoginRequiredMixin,CreateView):
   model = Bikepost
   template_name = 'app/bikepost.html'
@@ -114,7 +134,7 @@ class BikePostCreateView(LoginRequiredMixin,CreateView):
   login_url = 'login'
 
   def form_valid(self, form):
-    form.instance.post_user = self.request.user
+    form.instance.post_user = Customer.objects.get(user_id=self.request.user.id)
     return super().form_valid(form)
 
 class BikeDetailView(LoginRequiredMixin,DetailView):
@@ -156,7 +176,7 @@ def rent_bike_form(request,pk):
       instance=form.instance.post_user = Bikepost.objects.get(pk=pk)
       instance.is_available = False
       instance = form.save(commit=False)
-      instance.rent_user = request.user
+      instance.rent_user = Customer.objects.get(user_id=request.user.id)
       instance.save()
       messages.success(request, 'Congratulations Your request sent succesfully!!!')
   else:
@@ -177,21 +197,62 @@ def rent_history(request):
 
 def cancelRequest(request,pk):
   # bike = Rentbike.objects.get(rent_user=rent_user)
+  url=request.META.get('HTTP_REFERER')
   bike = get_object_or_404(Rentbike, id=pk)
   bike.delete()
-  return redirect('home')
+  return redirect(url)
   # return render(request, 'app/rent_history.html', {'bike': bike})
 
 def decline(request,pk):
+  url=request.META.get('HTTP_REFERER')
   bike = get_object_or_404(Rentbike, pk=pk)
   bike.request_status = "Decline"
+  bike.delivery_status= "None"
   bike.save()
-  return redirect('home')
+  return redirect(url)
   # return render(request, 'app/request.html',{'bike':bike})
 
 def accept(request,pk):
+  url=request.META.get('HTTP_REFERER')
   bike = get_object_or_404(Rentbike, pk=pk)
   bike.request_status = "Accepted"
   bike.save()
-  return redirect('home')
+  return redirect(url)
   # return render(request, 'app/request.html',{'bike':bike})
+
+def handover(request,pk):
+  url=request.META.get('HTTP_REFERER')
+  bike = get_object_or_404(Rentbike, pk=pk)
+  bike.delivery_status = "HandOvered"
+  bike.save()
+  return redirect(url)
+
+def notReturn(request,pk):
+  url=request.META.get('HTTP_REFERER')
+  bike = get_object_or_404(Rentbike, pk=pk)
+  bike.delivery_status = "NotReturn"
+  bike.save()
+  return redirect(url)
+
+
+def submit_review(request,customer_id):
+  url=request.META.get('HTTP_REFERER')
+  if request.method == 'POST':
+    try:
+      reviews=ReviewRating.objects.get(user_id=request.user.id, customer_id=customer_id)
+      form=ReviewForm(request.POST, instance=reviews)
+      form.save()
+      messages.success(
+          request, 'Thank you! Your review has been updated.')
+      return redirect(url)
+    except ReviewRating.DoesNotExist:
+      form=ReviewForm(request.POST)
+      if form.is_valid():
+          data=ReviewRating()
+          data.rating=form.cleaned_data['rating']
+          data.review=form.cleaned_data['review']
+          data.customer_id=customer_id
+          data.user_id=request.user.id
+          data.save()
+          
+          return redirect(url)
