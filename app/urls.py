@@ -25,12 +25,11 @@ urlpatterns=[
   path('search/',views.search_list,name="search"),
   
   path('bikepost/',views.BikePostCreateView.as_view(),name='bikepost'),
-#   path('bikepost1/<int:pk>/',views.postbike,name='bikepost1'),
   path('bike-detail/<int:pk>/',BikeDetailView.as_view(), name='bike-detail'),
   path('post/<int:pk>/edit/',PostUpdateView.as_view(), name='post_edit'),
   path('post/<int:pk>/delete/',PostDeleteView.as_view(), name='post_delete'),
   
-#   path('bike-list/',views.BikeListView.as_view(),name="bike-list"),
+  path('submit_review/<int:customer_id>/',views.submit_review, name='submit_review'),
 
   path('registration/',views.CustomerRegistration.as_view(),name="registration"),
   path('login/',views.login_request, name='login'),

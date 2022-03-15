@@ -69,4 +69,14 @@ class Rentbike(models.Model):
     return str(self.id)
 
 
-  
+class ReviewRating(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    review = models.TextField(max_length=500, blank=True)
+    rating = models.IntegerField()
+    status = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+      return str(self.id)

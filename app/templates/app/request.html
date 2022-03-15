@@ -52,13 +52,13 @@
             <td style="color: green;">{{rent.request_status}} </td>
             {% endif %}
             {% if rent.delivery_status == "Pending" %}
-            <td style="color: red;">{{ rent.delivery_status }}</td>
-            {% elif rent.request_status == "Accepted" %}
             <td><span><a href="{% url 'handover' rent.pk %}" class="btn btn-sm btn-success">Handoverd</a></span>  <span><a href="{% url 'notreturn' rent.pk %}" role="button" class="btn btn-sm btn-danger">Not Return</a></span></td>
             {% elif rent.delivery_status == "HandOvered" %}
-            <td>{{rent.delivery_status}}</td>
+            <td style="color: green;">{{rent.delivery_status}}</td>
             {% elif rent.delivery_status == "NotReturn" %}
-            <td>{{rent.delivery_status}}</td>
+            <td style="color: red;">{{rent.delivery_status}}</td>
+            {% elif rent.request_status == "Decline" %}
+            <td style="color: red;">None</td>
             {% endif %}
           </tr>
           
