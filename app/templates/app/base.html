@@ -75,9 +75,9 @@
                 <a href="" class="nav-link" style="color: #6D0A15;">Bikes</a>
               </li> -->
 
-
+              
               <li class="nav-item mx-2">
-                <a href="{% url 'bikepost' %}" class="nav-link" style="color: #6D0A15;">Post a Bike</a>
+                <a href="{% url 'bikepost'  %}" class="nav-link" style="color: #6D0A15;">Post a Bike</a>
               </li>
               <li class="nav-item mx-2">
                 <a href="{% url 'bikes' %}" class="nav-link" style="color: #6D0A15;">Rent a Bike</a>
@@ -93,7 +93,11 @@
             </ul>
             <form class="d-flex input-group w-auto" method="POST" action="{% url 'search' %}">
               {% csrf_token %}
+<<<<<<< HEAD
               <input type="search" class="form-control rounded" name="q" placeholder="Search Bikes"
+=======
+              <input type="search" class="form-control rounded" name="q" placeholder="Search Bike"
+>>>>>>> 9c951484220249f6a4573683f9f3176469a3b2a7
                 aria-label="Search" aria-describedby="search-addon" />
               <button type="submit" class="btn" style="background-color:#6D0A15;"><i class="fas fa-search"
                   style="color: white;"></i></button>

@@ -20,6 +20,7 @@
             <th scope="col">Serial no</th>
             <th scope="col">Bike owner name</th>
             <th scope="col">Bike owner Email</th>
+            <th scope="col">Bike owner Mobile</th>
             <th scope="col">Bike name</th>
             <th scope="col">Pick Up Date</th>
             <th scope="col">Drop-off-Date</th>
@@ -31,12 +32,13 @@
           </tr>
         </thead>
         {% for rent in rent_history %}
-        {% if rent.rent_user.pk == request.user.pk %}
+        {% if rent.rent_user.user.pk == request.user.pk %}
         <tbody>
           <tr>
             <th scope="row">{{forloop.counter}}</th>
-            <td>{{rent.post_user.post_user.username}}</td>
+            <td><a href="{% url 'customer-profile' rent.post_user.post_user.id %}">{{rent.post_user.post_user.user.username}}</a></td>
             <td>{{ rent.post_user.post_user.email }}</td>
+            <td>{{ rent.post_user.post_user.mobile }}</td>
             <td>{{rent.post_user.bike_name}}</td>
             <td>{{rent.pick_up_date}}</td>
             <td>{{rent.drop_off_date}}</td>
