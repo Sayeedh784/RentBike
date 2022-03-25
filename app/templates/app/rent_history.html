@@ -17,7 +17,7 @@
         <!-- <thead style="background-color: #6D0A15; color: white;"> -->
           <thead>
           <tr>
-            <th scope="col">Serial no</th>
+         
             <th scope="col">Bike owner name</th>
             <th scope="col">Bike owner Email</th>
             <th scope="col">Bike owner Mobile</th>
@@ -35,7 +35,7 @@
         {% if rent.rent_user.user.pk == request.user.pk %}
         <tbody>
           <tr>
-            <th scope="row">{{forloop.counter}}</th>
+            
             <td><a href="{% url 'customer-profile' rent.post_user.post_user.id %}">{{rent.post_user.post_user.user.username}}</a></td>
             <td>{{ rent.post_user.post_user.email }}</td>
             <td>{{ rent.post_user.post_user.mobile }}</td>

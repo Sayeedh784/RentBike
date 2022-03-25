@@ -13,7 +13,7 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            <th scope="col">Serial no</th>
+          
             <th scope="col">Renter name</th>
             <th scope="col">Renter Email</th>
             <th scope="col">Renter Mobile</th>
@@ -34,7 +34,7 @@
         {% if rent.post_user.post_user.user.pk == request.user.pk %}
         <tbody>
           <tr>
-            <th scope="row">{{forloop.counter}}</th>
+          
             <td><a href="{% url 'customer-profile' rent.rent_user.id %}">{{rent.rent_user.user.username}}</a></td>
             <td>{{rent.rent_user.email}}</td>
             <td>{{rent.rent_user.mobile}}</td>

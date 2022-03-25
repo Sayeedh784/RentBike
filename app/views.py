@@ -113,19 +113,6 @@ def all_bikes(request):
   return render(request, 'app/all_bikes.html',{'bikes':bikes,'page':page,'myfilter': myfilter,'all_bike':all_bike,'all_cus':all_cus,'customer':customer,'rent_bike':rent_bike})
 
 
-# def postbike(request,pk):
-#   if request.method == "POST":
-#     form = BikePostForm(request.POST,request.FILES)
-#     if form.is_valid():
-#       form.instance.post_user = Customer.objects.get(user_id=request.user.id)
-#       instance = form.save(commit=False)
-#       instance.save()
-#       messages.success(request, 'Congratulations,Bike post succesfully!!!')
-#   else:
-#     form = BikePostForm()
-#   context = {'form':form}
-#   return render(request, 'app/bikepost.html',context)
-
 
 class BikePostCreateView(LoginRequiredMixin,CreateView):
   model = Bikepost
@@ -150,7 +137,7 @@ class PostUpdateView(LoginRequiredMixin,UpdateView):
 
   def dispatch(self,request,*args,**kwargs):
     obj= self.get_object()
-    if obj.post_user != self.request.user:
+    if obj.post_user == self.request.user:
       raise PermissionDenied
     return super().dispatch(request,*args,**kwargs)
 
@@ -163,7 +150,7 @@ class PostDeleteView(LoginRequiredMixin,DeleteView):
 
   def dispatch(self,request,*args,**kwargs):
     obj= self.get_object()
-    if obj.post_user != self.request.user:
+    if obj.post_user == self.request.user:
       raise PermissionDenied
     return super().dispatch(request,*args,**kwargs)
 
